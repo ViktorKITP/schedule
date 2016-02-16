@@ -1,3 +1,4 @@
-/**
- * Created by jobo on 12.02.16.
- */
+"use strict";
+
+
+

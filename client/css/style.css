@@ -4,6 +4,7 @@
 
 body {
     font-family: Roboto, sans-serif;
+    padding-top: 70px;
 }
 
 .centered-blocks {
@@ -26,22 +27,22 @@ body {
     height: 100%;
 }
 
-/* Head */
-
-.head {
-    background: #355C7D;
-    height: 50px;
-    line-height: 50px;
-    font-size: 20px;
-    color: #ffffff;
-    text-align: center;
-}
-
 /* Page */
 
 .page {
     height: auto;
-    font-size: 30px;
+    font-size: 20px;
     color: #355C7D;
     text-align: center;
+}
+
+/* Mods */
+
+.padding-tab {
+    padding-top: 20px;
+}
+
+.tab-pane a {
+    font-size: 20px;
+    margin-left: 5px;
 }
