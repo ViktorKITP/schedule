@@ -4,6 +4,8 @@ var getData = {
     data: function(url, callback) {
         $.getJSON(url, function success(data) {
             callback(data);
+        }).fail(function error() {
+            errorMsg("Error 404, file not found.");
         });
     },
     groups: function(callback) {

@@ -9,6 +9,9 @@ var item = {
     },
     clearValue: function(id) {
         item.select(id).val("");
+    },
+    remove: function(idOrClass) {
+        item.select(idOrClass).remove();
     }
 };
 
@@ -38,4 +41,8 @@ createItem.prototype.addAttr = function(attribute, attributeValue) {
 
 createItem.prototype.showIn = function(spaceIdOrClass) {
     item.select(spaceIdOrClass).append(this.item);
+};
+
+createItem.prototype.showOn = function(spaceIdOrClass) {
+    item.select(spaceIdOrClass).prepend(this.item);
 };
