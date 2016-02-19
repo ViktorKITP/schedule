@@ -15,6 +15,10 @@ define("URLXLS","http://www.vorstu.ru/files/materials/5797/%D4%C8%D2%CA%C1%20%F0
 
 require_once ("./loaderXLS.php");
 require_once ("./Errors/FileLoadError.php");
+require_once ("parserXLS.php");
+require_once ("workDB.php");
+require_once ("appConfig.php");
+
 
 /*if (xlsToXslx(FILE,FILExlsx)){
 
@@ -24,20 +28,25 @@ require_once ("./Errors/FileLoadError.php");
 }*/
 
 //parserXLS("05featuredemo.xlsx",'1.xlsx');
+//ВЫВЕСТИ ОШИБКУ
 $loader=new loaderXLS();
 try{
     if ($loader->checkXLS(FILE_TEMP,FILE,URLXLS)){
         echo "обновился";
+        $parser=new parser("df");
+        $parser->parserXLS(FILE);
         // parserXLS(FILE,'csv.csv');
     } else {
         echo "не обновился"."</br>";
+        $parser=new parser(new workDB($db_host,$user_name,$password,$db_name));
+        $parser->parserXLS(FILE);
         //вывод сообщения что все плохо
     };
 }catch(FileLoadError $e){
     echo "Ошибка загрузки файла";
 }
 catch(Exception $e){
-
+   echo $e;
 }
 
 
