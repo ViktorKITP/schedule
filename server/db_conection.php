@@ -61,4 +61,3 @@ mysql_select_db($db_name) or die ("<p>hui tebe2  -".mysql.error()."</p>");
 echo "<p>mqyql</p>";*/
 }
 
-?>

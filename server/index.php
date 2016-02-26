@@ -29,8 +29,14 @@ require_once ("appConfig.php");
 
 //parserXLS("05featuredemo.xlsx",'1.xlsx');
 //ВЫВЕСТИ ОШИБКУ
-$loader=new loaderXLS();
-try{
+
+
+$parser=new parser(new workDB($db_host,$user_name,$password,$db_name));
+$parser->parserXLS(FILE);
+
+
+//$loader=new loaderXLS();
+/*try{
     if ($loader->checkXLS(FILE_TEMP,FILE,URLXLS)){
         echo "обновился";
         $parser=new parser("df");
@@ -43,11 +49,13 @@ try{
         //вывод сообщения что все плохо
     };
 }catch(FileLoadError $e){
+    $parser=new parser(new workDB($db_host,$user_name,$password,$db_name));
+    $parser->parserXLS(FILE);
     echo "Ошибка загрузки файла";
 }
 catch(Exception $e){
    echo $e;
-}
+}*/
 
 
 

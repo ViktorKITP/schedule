@@ -9,7 +9,5 @@
 $db_host="127.0.0.1";
 $user_name="root";
 $password="";
-$db_name="mysql";
+$db_name="schedule";
 
-
-?>

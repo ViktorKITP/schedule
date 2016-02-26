@@ -6,167 +6,134 @@
  * Date: 13.02.2016
  * Time: 1:17
  */
+//если не загрузился- ну дапустим ошибка загрузки файла- надо сделать чтобы парсил старое или выдавал старое
 include 'Classes/PHPExcel.php';
+require_once('listGroups.php');
+require_once('workDB.php');
 
-class parser {
+class parser
+{
     /** @var workDB */
-    public $db=null;
-    function __construct ($db){
-        $this->db=$db;
+    public $db = null;
+    public $filter = null;
+
+    /**
+     * parser constructor.
+     * @param $db
+     */
+    function __construct($db)
+    {
+        $this->db = $db;
+        $this->filter = $this->createFilter();
+        //   echo 'constr';
     }
 
-    function parserXLS($file_name){
-        // include 'Classes/PHPExcel/IOFactory.php';
-        $inputFileType = 'Excel2007';
-        //  $file_path='05featuredemo.xlsx';
-        //  $inputFileType = PHPExcel_IOFactory::identify( $file_path);
-        /*    $objReader = PHPExcel_IOFactory::createReader($inputFileType);
-            $objReader->setReadDataOnly(true);*/
-        // $objReader = PHPExcel_IOFactory::load($file_name_input);
+    /**
+     * @param $file_name
+     * @throws PHPExcel_Exception
+     */
+    function parserXLS($file_name)
+    {
 
-
-
-        /*    $r = PHPExcel_CachedObjectStorageFactory::initialize(PHPExcel_CachedObjectStorageFactory::cache_to_phpTemp);
-            if (!$r) {
-                die('Unable to set cell cacheing');
-            }*/
-
-
-
-        $objPHPExcel1=PHPExcel_IOFactory::load($file_name);
-        //  $objPHPExcel2=PHPExcel_IOFactory::createWriter($file_name_output);
-
-//$objPHPexcel1=PHPExcel_Reader_Excel2007::
-
-        //   ->
-//$objPHPExcel->setR
-        /*
-      $inputFileType = 'Excel2007';
-      $inputFileName = 'testBook.xlsx';
-
-      $r = PHPExcel_CachedObjectStorageFactory::initialize(PHPExcel_CachedObjectStorageFactory::cache_to_phpTemp);
-      if (!$r) {
-          die('Unable to set cell cacheing');
-      }
-
-
-
-      */
+   $objPHPExcel1 = PHPExcel_IOFactory::load($file_name);
 
         //устанавливаем активную страницу
-        //  $page = $objPHPExcel->setActiveSheetIndex(0);
-        $workSheet1=$objPHPExcel1->setActiveSheetIndex(0);
-        // $workSheet2=$objPHPExcel2->setActiveSheetIndex(0);
+        //$workSheet1 = $objPHPExcel1->setActiveSheetIndex(0);
+        $objPHPExcel1->setActiveSheetIndex(0);
 
         //забираем активную страницу
-        $sheet1=$objPHPExcel1->getActiveSheet();
-        //   $sheet2=$objPHPExcel2->getActiveSheet();
-        //получаем итератор строк
-        $rowIterator1=$sheet1->getRowIterator();
+        $sheet = $objPHPExcel1->getActiveSheet();
 
-
-        /*
-                $highestColumn      = $workSheet1->getHighestColumn();
-            $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
-            echo $highestColumnIndex;*/
-        //  $sheet1->removeColumn('A',1);
-        //$sheet1->re
-
-        // $objPHPexcel = PHPExcel_IOFactory::load($file_name_input);
-
-        //  $objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel1);
-        // $objWriter->setOffice2003Compatibility(true);
-        //  $objWriter->save($file_name_output);
-
-        $objPHPExcel2=new PHPExcel();
-        //$objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel1);
-        //$objPHPExcel2->save($file_name_output);
-        /* $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel1, 'Excel2007');
-         $objWriter->save($file_name_output);*/
         //проходимся по строкам
-        $this->findGroups($rowIterator1);
+        $this->findGroups($sheet);
 
-
-        /*
-            $sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
-            var_dump($sheetData);*/
-
-        /*$objReader = new PHPExcel_Reader_Excel5();
-        $objReader->setReadDataOnly(true);
-        try {
-            /** Load $inputFileName to a PHPExcel Object  **/
-        /*$objPHPExcel = $objReader->load($file_name_input);
-    } catch(PHPExcel_Reader_Exception $e) {
-        die('Error loading file: '.$e->getMessage());
-    }*/
-        /*
-        $objPHPexcel = PHPExcel_IOFactory::load($file_name_input);
-            $objWriter = new PHPExcel_Writer_Excel2007($objPHPexcel);
-            $objWriter->setOffice2003Compatibility(true);
-            $objWriter->save("05featuredemo.xlsx");
-
-        $objWorksheet = $objPHPexcel->getActiveSheet();
-        $objWorksheet->getCell('A1')->setValue('John');
-        $objWorksheet->getCell('A2')->setValue('Smith');
-
-
-
-
-      //4  $writer = PHPExcel_IOFactory::createWriter($file_name_input, 'CSV');
-     //   $writer = new PHPExcel_Writer_CSV($objPHPExcel);
-     //   $writer-> save($file_name_output);
-        //$writer->save()
-    /*
-    $worksheetData = $objReader->listWorksheetInfo($file_name_input);
-        echo '<pre>';
-    print_r($worksheetData);
-        echo '</pre>';
-    echo '<h3>Worksheet Information</h3>';
-    echo '<ol>';
-    foreach ($worksheetData as $worksheet) {
-        echo '<li>', $worksheet['worksheetName'], '<br />';
-        echo 'Rows: ', $worksheet['totalRows'],
-        ' Columns: ', $worksheet['totalColumns'], '<br />';
-        echo 'Cell Range: A1:',
-        $worksheet['lastColumnLetter'], $worksheet['totalRows'];
-        echo '</li>';
-    }
-    echo '</ol>';
-    */
     }
 
-    private $filter = array('ИСТ-151', 'ИВТ-151');
-    function findGroups($rowIterator){
+
+    function createFilter()
+    {
+        $lsGr = new listGroup();
+        $filter = $lsGr->createListGroups();
+        return $filter;
+    }
+
+
+    /**
+     * @param $rowIterator
+     */
+    // public  $i=0;
+    function findGroups(PHPExcel_Worksheet $sheet)
+    {
         $b = false;
-        foreach($rowIterator as $row){
+        $indexCellDAY = 0;
+        $rowIterator = $sheet->getRowIterator();
+        foreach ($rowIterator as $row) {
             //поучаем итератор ячеек
-            $cellIterator=$row->getCellIterator();
+            $cellIterator = $row->getCellIterator();
             //проходимся по всем ячейкам
-            foreach($cellIterator as $cell){
-                $cell_value= $cell->getFormattedValue();
+            foreach ($cellIterator as $cell) {
+                //удаляем пробелы вокруг и переводим в верхний регистр
+                $cell_value = mb_strtoupper(trim($cell->getFormattedValue()));
 
                 if ($b) {
-                    if (in_array($cell_value, $this->filter))
-                    {
-                        echo $cell_value;
-                        $this->db->saveGroup($cell_value);
-//                    $this->findSchedule($cell);
+                    echo $cell_value;
+                    if (in_array($cell_value, $this->filter[1])) {
+
+                        $this->saveColumn($cell->getColumn(), $cell->getRow(), $sheet, $indexCellDAY);
+                        // $this->db->saveGroup($cell_value);
+                        //                    $this->findSchedule($cell);
                     }
 
                 }
-                if ($cell_value=="день") {
+                if ($cell_value == "ДЕНЬ") {
+                    // echo $cell_value;
                     $b = true;
+                    //получаем индекс строки ДЕНЬ
+                    $indexCellDAY = $cell->getRow();
                 }
             }
+            //        echo $this->i++;
             if ($b)
                 return;
+
+        }
+        // $filter=$this->createFilter();
+    }
+
+
+    function findSchedule($cell)
+    {
+
+    }
+
+    function lastRow(PHPExcel_Worksheet $sheet, $indexCellDAY)
+    {
+        //получаем индекс последней строки в ЛИСТЕ
+        $higestRow = $sheet->getHighestRow();
+        for ($i = $indexCellDAY; $i <= $higestRow; $i++) {
+            $tempRow = $sheet->getCellByColumnAndRow(0, $i)->getFormattedValue();
+            if (mb_strtoupper(trim($tempRow)) == "СУББОТА")
+                return ++$i;
         }
     }
 
-    function findSchedule($cell){
+    function saveColumn($indexColumn, $indexRow, PHPExcel_Worksheet $sheet, $indexCellDAY)
+    {
+        $tempLastRow=$this->lastRow($sheet, $indexCellDAY);
+           //заносим в новую PHPExcel_Worksheet расписанице
+        do {
 
+            $value = $sheet->getCell($indexColumn . $indexRow)->getFormattedValue();
+            $day=$sheet->getCellByColumnAndRow(0,$indexRow)->getFormattedValue();;
+            $time=$sheet->getCellByColumnAndRow(1,$indexRow)->getFormattedValue();;
+           echo '$value='.$value;
+           echo "day=$day";
+           echo 'time='.$time;
+            print_r($this->db, true);
+            $this->db->saveSchedule($day,$time,$value);
+            $indexRow++;
+
+        } while ($indexRow !== $tempLastRow);
     }
-
 }
 
-?>
