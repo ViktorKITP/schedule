@@ -78,11 +78,19 @@ class workDB {
     }
 
     function getKurs(){
-
+        $STH =$this->DBH->prepare("select (name) from Course");
+        while($row = mysql_fetch_assoc($STH)){               
+            $GRP[] = $row;
+        }
+        return json_encode($GRP); 
     }
 
     function getGroup($kurs){
-
+        $STH =$this->DBH->prepare("select (name) from Group where Course = "+$kurs); 
+        while($row = mysql_fetch_assoc($STH)){ 
+            $COR[] = $row; 
+        }
+        return json_encode($COR); 
     }
 
 
