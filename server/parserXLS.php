@@ -24,7 +24,7 @@ class parser
     function __construct($db)
     {
         $this->db = $db;
-        $this->filter = $this->createFilter();
+        $this->filter = $this->createFilterGroup();
         //   echo 'constr';
     }
 
@@ -50,7 +50,7 @@ class parser
     }
 
 
-    function createFilter()
+    function createFilterGroup()
     {
         $lsGr = new listGroup();
         $filter = $lsGr->createListGroups();

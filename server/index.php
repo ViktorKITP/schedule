@@ -15,9 +15,12 @@ define("URLXLS","http://www.vorstu.ru/files/materials/5797/%D4%C8%D2%CA%C1%20%F0
 
 require_once ("./loaderXLS.php");
 require_once ("./Errors/FileLoadError.php");
-require_once ("parserXLS.php");
+//require_once ("parserXLS.php");
+require_once ("parserXLS_.php");
 require_once ("workDB.php");
 require_once ("appConfig.php");
+require_once ("appConfig.php");
+require_once ("listTime.php");
 
 
 /*if (xlsToXslx(FILE,FILExlsx)){
@@ -31,8 +34,11 @@ require_once ("appConfig.php");
 //ВЫВЕСТИ ОШИБКУ
 
 
-$parser=new parser(new workDB($db_host,$user_name,$password,$db_name));
-$parser->parserXLS(FILE);
+$parser=new parser(new workDB($db_host,$user_name,$password,$db_name/*test*/,FILE),FILE);
+
+//$parser->parserXLS(FILE);
+
+//$parser->findSchedule();
 
 
 //$loader=new loaderXLS();

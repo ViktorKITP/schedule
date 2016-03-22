@@ -122,5 +122,22 @@ private    function getYear()
     {
 
     }
+
+    function createListDay(){
+
+        $arrDay=array(
+            'ПОНЕДЕЛЬНИК',
+            'ВТОРНИК',
+            'СРЕДА',
+            'ЧЕТВЕРГ',
+            'ПЯТНИЦА',
+            'СУББОТА'
+
+        );
+
+        return $arrDay;
+
+
+    }
 }
 

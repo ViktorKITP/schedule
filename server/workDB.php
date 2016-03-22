@@ -5,12 +5,22 @@
  * Date: 13.02.2016
  * Time: 1:51
  */
+include_once 'finder.php';
 class workDB {
 
+    public $arr_schedule;
  public $DBH = null;
-    function __construct($db_host,$user_name,$password,$db_name)
+    function __construct($db_host,$user_name,$password,$db_name,/*  test*/$fileName)
     {
         $this->connectDB($db_host,$user_name,$password,$db_name);
+
+       $finder = new finder($fileName);
+    //    $this->arr_schedule=$finder->arr_schedule;
+       $this->saveSchedule( '1','2','3');
+
+
+        $finder->testEcho($this->arr_schedule);
+
 
     }
 
@@ -20,30 +30,38 @@ class workDB {
             # MySQL через PDO_MYSQL
             $this->DBH = new PDO("mysql:host=$db_host;dbname=$db_name", $user_name, $password);
             $this->DBH->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            echo "подключено";
         }
         catch(PDOException $e) {
             echo $e->getMessage();
         }
     }
-    function saveSchedule($day,$time,$value){
+    function saveSchedule($day1,$time1,$value){
     //сохранить в БД расписание
+        $this->deleteTable();
+
         try {
-            $STH =$this->DBH->prepare("INSERT INTO schedule ('DAY','TIME','VALUE') VALUES (:day,:time,:value)");
-//            $STH =$this->DBH->prepare("INSERT INTO course (name) VALUES ('xxx')");
 
-            $STH->bindParam(':name', $day);
-            $STH->bindParam(':time', $time);
-            $STH->bindParam(':value', $value);
+            foreach ($this->arr_schedule as $key=>$item) {
 
-            $value = '1';
-            $day='2';
-            $time='3';
+            $STH = $this->DBH->prepare("INSERT INTO schedule (`DAY`,`TIME`,`VALUE`) VALUES (:day1,:time1,:value1)");
+
+
+            //$STH->bindParam(':day1', $day1,PDO::PARAM_STR, 1);
+            $STH->bindParam(':day1', $item['day'],PDO::PARAM_STR, 10);
+            $STH->bindParam(':time1', $item['time'],PDO::PARAM_STR, 5);
+            $STH->bindParam(':value1', $item['value'],PDO::PARAM_STR, 50);
 
             $STH->execute();
+            }
         } catch (PDOException $e) {
             echo 'Подключение не удалось: ' . $e->getMessage();
             throw $e;
         }
+    }
+    function deleteTable (){
+        $STH = $this->DBH->prepare("TRUNCATE TABLE `schedule`");
+        $STH->execute();
     }
     function saveCourse($arr){
 
