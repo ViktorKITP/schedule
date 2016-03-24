@@ -1,50 +1,68 @@
-{
-  "Понедельник":{
-    "8:00":"Leloo322",
-    "9:45":"Leloo123",
-    "11:30":"Lelo23o",
-    "13:30":"Leloo32",
-    "15:15":"Le233loo",
-    "17:00":"L34eloo"
+[
+  {
+    "dayOfWeek":"Понедельник",
+    "lessons":[
+      {"time":"8:00", "name":"Leloo322"},
+      {"time":"9:45", "name":"Lelo22o322"},
+      {"time":"11:30", "name":"Leloo322"},
+      {"time":"13:30", "name":"Leloo322"},
+      {"time":"15:15", "name":"Leloo322"},
+      {"time":"17:00", "name":"Leloo322"}
+    ]
   },
-  "Вторник":{
-    "8:00":"Le222loo",
-    "9:45":"Lelo444o",
-    "11:30":"Leloo",
-    "13:30":"Le111loo",
-    "15:15":"Lelo333o",
-    "17:00":"Le66loo"
+  {
+    "dayOfWeek":"Вторник",
+    "lessons":[
+      {"time":"8:00", "name":"Leloo322"},
+      {"time":"9:45", "name":"Lelo111o322"},
+      {"time":"11:30", "name":"Leloo322"},
+      {"time":"13:30", "name":"Leloo322"},
+      {"time":"15:15", "name":"Leloo322"},
+      {"time":"17:00", "name":"Leloo111322"}
+    ]
   },
-  "Среда":{
-    "8:00":"Lel333oo",
-    "9:45":"Lel22oo",
-    "11:30":"Lel666oo",
-    "13:30":"Le88loo",
-    "15:15":"Le222loo",
-    "17:00":"Le888loo"
+  {
+    "dayOfWeek":"Среда",
+    "lessons":[
+      {"time":"8:00", "name":"Leloo322"},
+      {"time":"9:45", "name":"Leloo322"},
+      {"time":"11:30", "name":"Leloo322"},
+      {"time":"13:30", "name":"Leloo322"},
+      {"time":"15:15", "name":"Leццццццloo322"},
+      {"time":"17:00", "name":"Leloo322"}
+    ]
   },
-  "Четверг":{
-    "8:00":"Lel33oo",
-    "9:45":"Lel122314oo",
-    "11:30":"Le4444loo",
-    "13:30":"Lel5555oo",
-    "15:15":"Lel7666oo",
-    "17:00":"Le234loo"
+  {
+    "dayOfWeek":"Четверг",
+    "lessons":[
+      {"time":"8:00", "name":"Leloo322"},
+      {"time":"9:45", "name":"Leloo322"},
+      {"time":"11:30", "name":"Leloo322"},
+      {"time":"13:30", "name":"Lelo5444o322"},
+      {"time":"15:15", "name":"Leloo322"},
+      {"time":"17:00", "name":"Leloo322"}
+    ]
   },
-  "Пятница":{
-    "8:00":"Lel44444oo",
-    "9:45":"Lelo234o",
-    "11:30":"Le67676loo",
-    "13:30":"Le2342343loo",
-    "15:15":"Le4545454loo",
-    "17:00":"Le1111111111111loo"
+  {
+    "dayOfWeek":"Пятница",
+    "lessons":[
+      {"time":"8:00", "name":"Leloo322"},
+      {"time":"9:45", "name":"Leloo322"},
+      {"time":"11:30", "name":"Lel112313oo322"},
+      {"time":"13:30", "name":"Leloo322"},
+      {"time":"15:15", "name":"Leloo322"},
+      {"time":"17:00", "name":"Leloo322"}
+    ]
   },
-  "Суббота":{
-    "8:00":"Le444loo",
-    "9:45":"444Leloo444",
-    "11:30":"Lel5454oo",
-    "13:30":"L23eloo",
-    "15:15":"Lel66oo",
-    "17:00":"Le43343loo"
+  {
+    "dayOfWeek":"Суббота",
+    "lessons":[
+      {"time":"8:00", "name":"Leloo322"},
+      {"time":"9:45", "name":"Leloo322"},
+      {"time":"11:30", "name":"Leloo322"},
+      {"time":"13:30", "name":"Leloo322"},
+      {"time":"15:15", "name":"Leloo322"},
+      {"time":"17:00", "name":"Lel11111111oo322"}
+    ]
   }
-}
+]
