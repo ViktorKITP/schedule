@@ -71,7 +71,8 @@ const Description = React.createClass({
 
 const Tab = React.createClass({
   componentWillMount() {
-    const groupsUrl = "../client/json/groups.json";
+    //const groupsUrl = "../client/json/groups.json";
+    const groupsUrl = "/?action=groups";
     let self = this;
     $.getJSON(groupsUrl, function (data) {
       self.setState({
