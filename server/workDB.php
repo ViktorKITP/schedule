@@ -14,12 +14,12 @@ class workDB {
     {
         $this->connectDB($db_host,$user_name,$password,$db_name);
 
-       $finder = new finder($fileName);
-    //    $this->arr_schedule=$finder->arr_schedule;
-       $this->saveSchedule( '1','2','3');
+       //$finder = new finder($fileName);
+     //   $this->arr_schedule=$finder->arr_schedule;
+      // $this->saveSchedule( '1','2','3');
 
 
-        $finder->testEcho($this->arr_schedule);
+     //   $finder->testEcho($this->arr_schedule);
 
 
     }
@@ -30,7 +30,8 @@ class workDB {
             # MySQL через PDO_MYSQL
             $this->DBH = new PDO("mysql:host=$db_host;dbname=$db_name", $user_name, $password);
             $this->DBH->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            echo "подключено";
+
+
         }
         catch(PDOException $e) {
             echo $e->getMessage();
@@ -48,9 +49,9 @@ class workDB {
 
 
             //$STH->bindParam(':day1', $day1,PDO::PARAM_STR, 1);
-            $STH->bindParam(':day1', $item['day'],PDO::PARAM_STR, 10);
+            $STH->bindParam(':day1', $item['day'],PDO::PARAM_STR, 11);
             $STH->bindParam(':time1', $item['time'],PDO::PARAM_STR, 5);
-            $STH->bindParam(':value1', $item['value'],PDO::PARAM_STR, 50);
+            $STH->bindParam(':value1', $item['value'],PDO::PARAM_STR, 100);
 
             $STH->execute();
             }
@@ -64,6 +65,19 @@ class workDB {
         $STH->execute();
     }
     function saveCourse($arr){
+
+    }
+
+//
+    function getGroups(){
+        $arr=[];
+        $sql = "SELECT c.id as cid, c.name as cname, g.id, g.name FROM `group` g, `course` c, `course_group` cg
+where c.id = cg.course_id and cg.group_id = g.id ;";
+        foreach ($this->DBH->query($sql) as $row) {
+
+            $arr[]= $row;
+            }
+        return $arr;
 
     }
     function saveGroup($kurs){

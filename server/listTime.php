@@ -46,6 +46,6 @@ $t=$r->shema();
 $reg='/^[0-9]:[0-9][0-9]|[0-9][0-9]:[0-9][0-9]/';
 //$reg='/^[0-9]:[0-9][0-9]/';
 foreach ($t as $i) {
-    echo $i."</br>";
+  //  echo $i."</br>";
     if(preg_match( $reg,$i)) echo $i."</br>";
 }
