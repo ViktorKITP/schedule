@@ -114,7 +114,7 @@ const Tab = React.createClass({
                     return (
                       <a key={`1${key[2]++}`}
                         className="btn btn-default"
-                        onClick={self.scheduleRequest.bind(self, course.name, group)}>{group}
+                        onClick={self.scheduleRequest.bind(self, course.name, group)}>{group.name}
                       </a>
                     )
                   })
